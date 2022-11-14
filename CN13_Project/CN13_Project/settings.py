@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-ad+_515bzdkp9=x-nhn36$mbiy$p97150b_ny)%a$reshyh2^9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+asd = '3187-124-120-181-65.ap.ngrok.io'
+
+ALLOWED_HOSTS = [f"{asd}"]
+CSRF_TRUSTED_ORIGINS = [f'https://{asd}','https://*.127.0.0.1']
 
 
 # Application definition
@@ -38,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'database',
 ]
 
 MIDDLEWARE = [

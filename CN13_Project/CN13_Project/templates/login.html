@@ -1,0 +1,85 @@
+<html>
+     <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Login</title>
+     </head>
+     <body>
+          <h1>Login Pages</h1>
+          {% if not form.is_valid %}
+               <form method='post'>
+                    {% csrf_token %}
+                    <p class="sec-head">Enter your Student ID</p>
+                    <small>Please enter your Student ID.</small><br>
+                    <input class="input-box" type="text" name="sid" placeholder="">
+
+                    <p class="sec-head">Enter your First Name</p>
+                    <small>Please enter your First Name.</small><br>
+                    <input class="input-box" type="text" name="fname" placeholder=""><br>
+
+                    <p class="sec-head">Enter your Last Name</p>
+                    <small>Please enter your Last Name.</small><br>
+                    <input class="input-box" type="text" name="lname" placeholder=""><br>
+
+                    <p class="sec-head">Enter your Telephone Number</p>
+                    <small>Please enter your Telephone Number.</small><br>
+                    <input class="input-box" type="text" name="tel" placeholder=""><br>
+
+                    <p class="sec-head">Choose select your Department</p>
+                    <select name="dept" id="dept">
+                    <option value="EE">EE</option>
+                    <option value="IE">IE</option>
+                    <option value="CE">CE</option>
+                    <option value="ChE">ChE</option>
+                    <option value="ME">ME</option>
+                    <option value="CN">CN</option>
+                    </select><br><br>
+                    <button class="btn" type="submit">ENTER</button>
+               </form>
+
+          {% endif %}
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+          <script src="https://static.line-scdn.net/liff/edge/versions/2.9.0/sdk.js"></script>
+          <script>
+               liff.init({ liffId: "1657196715-wb3NDYPR" }, () => {
+                    if (!liff.isLoggedIn()) {
+                         liff.login();
+                    } else {
+                         const accessToken = liff.getAccessToken();
+                         const sid = document.getElementById("sid").value;
+                         const fname = document.getElementById("fname").value;
+                         const lname = document.getElementById("lname").value;
+                         const tel = document.getElementById("tel").value;
+                         const dept = document.getElementById("dept").value;
+
+                         let data = {                    
+                         'access_token': accessToken,
+                         'sid': sid,
+                         'fname': fname,
+                         'lname': lname,
+                         'tel': tel,
+                         'dept': dept,
+                         'csrfmiddlewaretoken': '{{ csrf_token }}'
+                         }
+
+                         console.log("before");
+                         $.ajax({
+                              type: "POST",
+                              url: "https://3187-124-120-181-65.ap.ngrok.io/login/",
+                              data: data,
+                              dataType: 'JSON',
+                              success: function (data) {
+                                   if (data.is_taken) {
+                                        console.log("already add DB");
+                                        alert("already save in db");
+                                   }
+                              }
+                         });
+                    }
+               }, err => console.error(err.code, error.message));
+          </script>
+     </body>
+</html>
+
+
+
+

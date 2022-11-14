@@ -20,4 +20,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
+    path('line_api/', views.line_api, name="line_api"),
+    path('login/', views.login, name="login"),
+    # path('line_api_add_db/', views.line_api_add_db, name="line_api_add_db"),
 ]

@@ -1,0 +1,44 @@
+<html>
+   <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The title</title>
+   </head>
+   <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://static.line-scdn.net/liff/edge/versions/2.9.0/sdk.js"></script>
+        <script>
+            liff.init({ liffId: "1657196715-wb3NDYPR" }, () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    const accessToken = liff.getAccessToken();
+                    
+                    let data = {                    
+                        'access_token': accessToken,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    }
+                    console.log("a");
+                    $.ajax({
+                        type: "POST",
+                        url: "https://3187-124-120-181-65.ap.ngrok.io/line_api/",
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if (data.is_taken) {
+                                alert(data.userId);
+                                alert(data.sid);
+                                alert(data.fname);
+                                alert(data.lname);
+                                alert(data.tel);
+                                alert(data.dept);
+                            }else{
+                                console.log("b");
+                                window.location.href = "https://3187-124-120-181-65.ap.ngrok.io/login/";
+                            }
+                        }
+                    });
+                }
+            }, err => console.error(err.code, error.message));
+        </script>
+   </body>
+</html>
